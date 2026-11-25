@@ -1,0 +1,26 @@
+name: "5 · Delivery"
+description: "Repo-specific work package for an engineering agent. One per code repo; sub-issue of the Specification."
+title: "DLV · <SPEC-ID> · <repo> · <short scope>"
+type: Delivery
+projects: ["SpendMend-PRoduct-SandBox/3"]
+
+body:
+  - type: markdown
+    attributes:
+      value: "Assign to the coding agent once this is filled in. The agent must read the spec **at the pinned SHA** before planning."
+  - type: input
+    id: spec
+    attributes:
+      label: Spec at pinned SHA
+      placeholder: "https://github.com/ORG/product-context/blob/<sha>/specs/p2p/SPEC-P2P-001.md"
+    validations: {required: true}
+  - type: textarea
+    id: scope
+    attributes: {label: Scope in this repo, description: Which rules and acceptance tests (AT-n) this repo implements.}
+    validations: {required: true}
+  - type: input
+    id: flag
+    attributes: {label: Feature flag, placeholder: purchasing.p2p.001}
+  - type: textarea
+    id: notes
+    attributes: {label: Notes for the agent, description: "Constraints, ADRs to read, test data. Questions come back as comments labelled agent-question."}
