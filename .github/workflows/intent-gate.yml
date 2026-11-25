@@ -1,0 +1,23 @@
+name: intent-gate
+# Passes only when the Feature Lead has added the intent-approved label (business intent approval).
+# Required by the ruleset on main. Re-runs whenever labels change.
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, labeled, unlabeled]
+permissions:
+  contents: read
+jobs:
+  intent-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require intent-approved label
+        env:
+          LABELS: ${{ toJSON(github.event.pull_request.labels.*.name) }}
+        run: |
+          echo "Labels: $LABELS"
+          if echo "$LABELS" | jq -e 'index("intent-approved") != null' > /dev/null; then
+            echo "Business intent approved."
+          else
+            echo "::error::Waiting for business intent approval: the Feature Lead must add the 'intent-approved' label."
+            exit 1
+          fi
